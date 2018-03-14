@@ -19,9 +19,9 @@ $(document).ready( function() {
                                  "job_title":"Captain America"       
                             })
                         }
-                            var url = 'https://ducky.freshdesk.com/api/v2/contacts/36005440528';
+                            var url = 'https://ducky.freshdesk.com/api/v2/contacts/36005037811';
                             console.log('contactid url:', url);
-                            client.request.put(url, options)
+                            client.request.delete(url, options)
                             .then(function(contactsuccess) {
                                 console.log('contactsuccess:',contactsuccess);
                             },

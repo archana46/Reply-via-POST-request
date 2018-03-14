@@ -15,13 +15,13 @@ $(document).ready( function() {
                                 "content-type":"application/json"
                             },
                             body: JSON.stringify({
-                                "name":"Super Man",
-                                 "email":"superman@freshdesk.com"       
+                                "name":"Rogers",
+                                 "job_title":"Captain America"       
                             })
                         }
-                            var url = 'https://ducky.freshdesk.com/api/v2/contacts';
+                            var url = 'https://ducky.freshdesk.com/api/v2/contacts/36005440528';
                             console.log('contactid url:', url);
-                            client.request.post(url, options)
+                            client.request.put(url, options)
                             .then(function(contactsuccess) {
                                 console.log('contactsuccess:',contactsuccess);
                             },

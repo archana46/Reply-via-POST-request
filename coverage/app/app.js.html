@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">86.67% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>12/14</span>
+        <span class='fraction'>13/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>6/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">86.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/14</span>
+        <span class='fraction'>13/15</span>
       </div>
     </div>
   </div>
@@ -85,32 +85,35 @@
 40
 41
 42
-43</td><td class="line-coverage quiet"><span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
+43
+44
+45
+46</td><td class="line-coverage quiet"><span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,7 +126,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,10 +139,10 @@
           var client = _client;
           client.events.on('app.activated',
             function() {
-                client.data.get('contact')
-                    .then(function(data) {
-                        var contactid= data.contact.id;
-&nbsp;
+                client.data.get('ticket')
+                    .then(function(ticketdata) {
+                        console.log('ticketdata',ticketdata);
+                        var ticketid= ticketdata.ticket.id;
                         var options = {
                             headers: 
                             {
@@ -144,38 +150,41 @@
                                 "content-type":"application/json"
                             },
                             body: JSON.stringify({
-                                "name":"Rogers",
-                                 "job_title":"Captain America"       
+                                "body":"We are working on this issue. Will keep you posted." 
+                                      
                             })
                         }
-                            var url = 'https://ducky.freshdesk.com/api/v2/contacts/36005037811';
-                            console.log('contactid url:', url);
-                            client.request.delete(url, options)
-                            .then(function(contactsuccess) {
-                                console.log('contactsuccess:',contactsuccess);
+                            var url = 'https://ducky.freshdesk.com/api/v2/tickets/'+ticketid+'/reply';
+                            console.log('ticketid url:', url);
+                            client.request.post(url, options)
+                            .then(function(replysuccess) {
+                                console.log('replysuccess:',replysuccess);
                             },
-                            function (contacterr) {
+                            function (replyerr) {
                                 // body...
-                                console.log('contacterr',contacterr);
+                                console.log('replyerr',replyerr);
                             })
 &nbsp;
                         })
                         .catch(<span class="fstat-no" title="function not covered" >function(f){</span>
 <span class="cstat-no" title="statement not covered" >                            console.log('Error -',f);</span>
                         })
+&nbsp;
+                        
                     })
                     .catch(<span class="fstat-no" title="function not covered" >function(e) {</span>
 <span class="cstat-no" title="statement not covered" >                        console.log('Exception - ', e);</span>
                     });
         });
     });
+    
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 14 2018 18:06:46 GMT+0530 (IST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 15 2018 12:26:56 GMT+0530 (IST)
 </div>
 </div>
 <script src="../prettify.js"></script>

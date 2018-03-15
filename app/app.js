@@ -4,10 +4,10 @@ $(document).ready( function() {
           var client = _client;
           client.events.on('app.activated',
             function() {
-                client.data.get('contact')
-                    .then(function(data) {
-                        var contactid= data.contact.id;
-
+                client.data.get('ticket')
+                    .then(function(ticketdata) {
+                        console.log('ticketdata',ticketdata);
+                        var ticketid= ticketdata.ticket.id;
                         var options = {
                             headers: 
                             {
@@ -15,28 +15,31 @@ $(document).ready( function() {
                                 "content-type":"application/json"
                             },
                             body: JSON.stringify({
-                                "name":"Rogers",
-                                 "job_title":"Captain America"       
+                                "body":"We are working on this issue. Will keep you posted." 
+                                      
                             })
                         }
-                            var url = 'https://ducky.freshdesk.com/api/v2/contacts/36005037811';
-                            console.log('contactid url:', url);
-                            client.request.delete(url, options)
-                            .then(function(contactsuccess) {
-                                console.log('contactsuccess:',contactsuccess);
+                            var url = 'https://ducky.freshdesk.com/api/v2/tickets/'+ticketid+'/reply';
+                            console.log('ticketid url:', url);
+                            client.request.post(url, options)
+                            .then(function(replysuccess) {
+                                console.log('replysuccess:',replysuccess);
                             },
-                            function (contacterr) {
+                            function (replyerr) {
                                 // body...
-                                console.log('contacterr',contacterr);
+                                console.log('replyerr',replyerr);
                             })
 
                         })
                         .catch(function(f){
                             console.log('Error -',f);
                         })
+
+                        
                     })
                     .catch(function(e) {
                         console.log('Exception - ', e);
                     });
         });
     });
+    
